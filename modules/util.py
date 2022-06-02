@@ -32,7 +32,7 @@ def create_net():
     for l in data:
         '''
             l[0] : Tipo de relación
-            l[1] : Nodo A
+            l[1] : Nodo A (Criatura origen)
             l[i] : Nodo B
         '''
         for i in range(2, len(l), 1):
@@ -58,3 +58,30 @@ def clear_line(line:list):
         if line[i] == '':
             line.pop(i)
     return line
+
+def search_neighbors(G, node):
+    try:
+        print(list(nx.all_neighbors(G,node)))
+        return True
+    except:
+        return False
+
+def centrality(G):
+    nodes = nx.degree_centrality(G)
+    max_key = max(nodes, key=nodes.get)
+    print('******************************')
+    print('*****Nodos y Centralidad******')
+    print('******************************')
+    for key in nodes:
+        print(f'{key} : {nodes[key]}')
+    print('******************************')
+    print(f'El nodo más importante de la red es:')
+    print(f'{max_key} : {nodes[max_key]}')
+    print('******************************')
+
+def path(G, source, target):
+    try:
+        print(list(nx.all_shortest_paths(G, source, target)))
+        return True
+    except:
+        return False
