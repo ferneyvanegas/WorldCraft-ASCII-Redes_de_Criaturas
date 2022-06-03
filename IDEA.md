@@ -53,11 +53,105 @@ Dada una masiva cantidad de criaturas, establecer  una red de relaciones especí
 5. Construir un método para que, dados dos nombres de dos criaturas, calcule si hay un camino entre ambos (una ruta para llegar desde uno hasta el otro)
 
 ## ALGORITMOS (A)
-### **algoritmo main**
+### **Algoritmo create_net**
+*Parámetros: Ninguno* 
+* Funcion G<-create_net()
+    * Leer archivo
+    * Dimensionar data
+    * /*crear_grafo es una función de externa*/
+    * G = Llamar crear_grafo()
+    * Para cada i<-0 hasta número_lineas_archivo con Paso 1 Hacer:
+        * /*agregar_nodo es una función de externa*/
+        * Llamar agregar_nodo(archivo[i])
+        * data[i] = archivo[i]
+    * FinPara
+    * Para cada l<-0 hasta Llamar longitud[data] con paso 1 Hacer:
+        * Para cada i<-2 hasta Llamar logitud[l] con paso 1 Hacer:
+            * /*agregar_relacion es una función de externa*/
+            * G = Llamar agregar_relacion(data[l], data[i], relacion=data[0]) 
+        * FinPara
+    * FinPara
+    * Retornar G
+* FinFuncion
+***
+### **Algoritmo clear_line**
+*Parametros: line*
+* Funcion
+    * Para cada i<-0 hasta Llamar longitud(line) con paso 1 Hacer:
+        * /*eliminar_de_linea es una función de externa*/
+        * Si line[i] == '' Entonces:
+            * Llamar eliminar_de_linea(line[i])
+        * FinSi
+    * FinPara
+* FinFuncion
+***
+### **Algoritmo search_neighbors**
+*Parámetros: G, node*
+* Funcion bool <- search_neighbors()
+    * /*todas_las_relaciones es una función de externa*/
+    * Si Escribir Llamar todas_las_relaciones(G, none)
+        * Retorne True
+    * Si no
+        * Retorne False
+    * FinSi
+* FinFuncion
+***
+### **Algoritmo centrality**
+*Parámetros: G*
+* Funcion centrality()
+    * /*obtener_centralidad es una función de externa*/
+    * nodes = Llamar obtener_centralidad(G)
+    * /*max y obtener_llave son funciones de externas*/
+    * max_key = Llamar max(nodes, key=Llamar obtener_llave())
+    * Escribir El nodo más importante de la red es max_key
+* FinFuncion
+***
+### **Algoritmo path**
+*Parámetros: G, source, target*
+* Funcion path
+    * /*encontrar_caminos es una función de externa*/
+    * Si Escribir Llamar encontrar_caminos(G, source, target)
+        * Retorne True
+    * Si no
+        * Retorne False
+    * FinSi
+* FinFuncion
+***
+### **Algoritmo main**
 *Parámetros: Ninguno*
 * Funcion main()
-    * /*Las funciones abrir, eliminar_vacios y graficar son propias de las librerías a usar*/
-    * file = Llamar abrir(path_archivo)
-    * Llamar eliminar_vacios(file)
-    * Llamar graficar(file)
+    * G = Llamar create_net()
+    * exit = False
+    * Mientras exit == False Haga:
+        * Escribir 1. Dibugar Grafo
+        * Escribir 2. Ver nodos y relaciones
+        * Escribir 3: Consultar
+        * Escribir 4: Centralidad
+        * Escribir 5: Calcular camino
+        * Escribir 6: Salir
+        * Leer opt
+        * Si opt == 1 Entonces:
+            * /*dibujar_grafo es una función de externa*/
+            * Llamar dibujar_grafo(G)
+        * FinSi
+        * Si opt == 2 Entonces:
+        * /*escribir_relaciones es una función de externa*/
+            * Llamar escribir_relaciones(G)
+        * FinSi
+        * Si opt == 3 Entonces:
+            * Leer node
+            * Llamar search_neighbors(G, node)
+        * FinSi
+        * Si opt == 4 Entonces:
+            * Llamar centrality(G)
+        * FinSi
+        * Si opt == 5 Entonces:
+            * Leer origen
+            * Leer destino
+            * Llamar path(G, origen, destino)
+        * FinSi
+        * Si opt == 6 Entonces:
+            * exit = True
+        * FinSi
+    * FinMientras
 * FinFuncion
