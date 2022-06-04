@@ -1,4 +1,5 @@
 import networkx as nx
+import matplotlib.pyplot as plt
 
 def create_net():
     '''
@@ -9,7 +10,7 @@ def create_net():
     * G: networkx
         Una red de nodos (criaturas) con sus respectivas relaciones
     '''
-    file = open('repo/data.txt')
+    file = open('repo/data.txt') # Podría ser un csv, pero también un txt es opción y el requisito estaba abierto
     data = []
     G = nx.Graph()
 
@@ -25,11 +26,11 @@ def create_net():
         l = clear_line(l) # Limpieza de vacíos
         # =====================================      
         data.append(l) # Se crea una copia para posteriormente hacer las relaciones        
-        G.add_node(l[1]) # Los nodos están ubicados en la posicioń 1 de la línea
+        G.add_node(l[1]) # Se agregan nodos. Los nodos están ubicados en la posicioń 1 de la línea
         
     file.close() # Se cierra el archivo
 
-    # Adicion de ejes (relacinoes dirigidas)
+    # Adicion de ejes (relaciones dirigidas)
     for l in data:
         '''
             l[0] : Tipo de relación
@@ -37,7 +38,7 @@ def create_net():
             l[i] : Nodo B (Criatura destino)
         '''
         for i in range(2, len(l), 1):
-            G.add_edge(l[1], l[i], relation=l[0])
+            G.add_edge(l[1], l[i], relation=l[0]) # Se agregan las relaciones a la red
 
     return G
 
@@ -53,7 +54,7 @@ def clear_line(line:list):
     * line: list
         Un listado con nombres de criaturas, sin espacios
     '''
-    # Limpiar listado de vacíos (La construcción del archivo dejó vacíos)
+    # Limpiar línea de vacíos (La construcción del archivo dejó vacíos)
     for i in range((len(line)-1), -1, -1): 
         if line[i] == '':
             line.pop(i)
@@ -103,7 +104,7 @@ def centrality(G):
     '''
     nodes = nx.degree_centrality(G) # Pag: 226 | Se obtiene un diccionario con la centralidad de cada nodo
 
-    # Se puede descomentar las líneas del 96 al 104 para ver los resultados obtenidos con degree_centrality
+    # Se puede descomentar las líneas del 107 al 115 para ver los resultados obtenidos con degree_centrality
     ''' print('******************************')
     print('*****Nodos y Centralidad******')
     print('******************************')
@@ -116,8 +117,8 @@ def centrality(G):
 
     '''
     La funcion max encuentra el mayor de una secuencia. 
-    Con .get() obtengo la llave de cda item del diccionario y la paso como parámetro a max
-    https://www.delftstack.com/es/howto/python/find-max-value-in-dictionary-python/
+    Con .get() obtengo la llave de cada item del diccionario y la paso como parámetro a max
+    Fuente: https://www.delftstack.com/es/howto/python/find-max-value-in-dictionary-python/
     '''
     max_key = max(nodes, key=nodes.get) 
 
@@ -144,9 +145,9 @@ def path(G, source, target):
         False: Si no se puede alcanzar el destino desde el origen.
     '''
     try:
+
         # all_shortest_paths entrega todas las rutas entre el origen y el destino
         # print(list(nx.all_shortest_paths(G, source, target))) # Pag: 577
-        # all_shortest_paths entrega todas las rutas entre el origen y el destino
         print('****************************************************************************\n'
             f'Los caminos para llegar de {source} hasta {target} son\n'
             '****************************************************************************')
@@ -157,7 +158,13 @@ def path(G, source, target):
                     f'\033[92m {j} \033[92m', 
                     f'\033[93m||-\033[92m', 
                     end='')
+            # Dibujar cada uno de los caminos
+            subpath = G.subgraph(i)
+            nx.draw(subpath, with_labels=True, node_color='r', edge_color='b')
+            plt.show()
+ 
             print('\n****************************************************************************')
+       
         return True
     except:
         return False
