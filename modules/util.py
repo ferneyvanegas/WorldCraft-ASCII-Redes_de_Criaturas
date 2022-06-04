@@ -161,6 +161,7 @@ def path(G, source, target):
             # Dibujar cada uno de los caminos
             subpath = G.subgraph(i)
             nx.draw(subpath, with_labels=True, node_color='r', edge_color='b')
+            print('\n...mostrando gráfica (cerrar gráfica para continuar)...')
             plt.show()
  
             print('\n****************************************************************************')

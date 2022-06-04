@@ -1,7 +1,7 @@
 '''
     Desarrollado por: Ferney Vanegas Hernández
     Misión TIC 2022
-    Versión : 1.0.4
+    Versión : 1.0.5
     Título: Reto 7
     *****************************************************
     Observaciones: 
@@ -47,6 +47,7 @@ def main():
             if int(opt) == 1: # DIBUJAR GRAFO
                 # Dibujar el grafo (draw_circular = Modo circular)
                 nx.draw_circular(G, with_labels=True, node_color='r', edge_color='b')
+                print('...mostrando gráfica (cerrar gráfica para continuar)...')
                 plt.show()
             # =============================================================  
             if int(opt) == 2: # VER NODOS
